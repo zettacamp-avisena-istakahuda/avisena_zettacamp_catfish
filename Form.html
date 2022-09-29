@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="asset/CSS/Form.css" type="text/css">
+</head>
+<body>
+ <header>
+    <div class="navbar">
+        <a href="file:///C:/Users/LENOVO/Angular/projects/zettacamp_catfish/avisena_zettacamp_catfish/Form.html"><h3>FORM</h3></a>
+        <a href="file:///C:/Users/LENOVO/Angular/projects/zettacamp_catfish/avisena_zettacamp_catfish/Table.html"><h3>TABLE</h3></a>
+    </div>
+</header>
+
+<section>
+  <div class="new-expense">
+    <form onSubmit={submitHandler}>
+        <div class="form">
+        
+          <label>Nama</label>
+          <input
+            type='text'
+ 
+          />
+
+          <label>Email</label>
+          <input
+            type='email'
+
+          />
+        
+          <label>Usia</label>
+          <input
+            type='number'
+            min='0'
+            step='1'
+
+          />
+          <label>Tanggal Lahir</label>
+          <input
+            type='date'
+
+          />
+
+         <label>Nomor Telepon</label>
+          <input
+            type='tel'
+
+          />
+
+          <label>Zettabyte Office</label>
+          <select value={enteredCountry} >
+          <option value="Indonesia">Indonesia</option>
+          <option value="India">India</option>
+          <option value="Singapore">Singapore</option>
+          </select>
+
+
+        <p>Gender:</p>
+        <div class="radioandcheck">
+        <input type="radio" value="Male" name="gender" />
+        <label>Male</label>
+        </div>
+        
+        <div class="radioandcheck">
+        <input type="radio" value="Female" name="gender" />
+        <label>Female</label>
+        </div>
+          
+        <p>Vaccine injected: </p>
+        <div class="radioandcheck">
+        <input type="checkbox" value="Sinovac" name="vaccine" />
+        <label>Sinovac</label>
+        </div>
+        
+        <div class="radioandcheck">
+        <input type="checkbox" value="Pfizer" name="vaccine" />
+        <label>Pfizer</label>
+        </div>
+
+        <div class="radioandcheck">
+        <input type="checkbox" value="Astrazeneca" name="vaccine" />
+        <label>Astrazeneca</label>
+        </div>
+
+        <div class="radioandcheck">
+        <input type="checkbox" value="Moderna" name="vaccine" />
+        <label>Moderna  </label>
+        </div>
+
+        <label for="avatar">Choose a profile picture:</label>
+
+        <input type="file"/>
+
+        <button type='submit'>Submit</button>
+    </div>
+    </form>
+    </div>
+</section>
+
+<div class="expense-item">
+  <div class="improve">
+    <div class="expense-date">
+        <img src="https://media.istockphoto.com/photos/young-man-on-a-taking-selfie-at-home-camera-point-of-view-picture-id1390884026?b=1&k=20&m=1390884026&s=170667a&w=0&h=DUhb3bB1GJHO7x2ZkIZL6x-YCfrbMl8XfI1qpFdCAhY="/>
+    </div>
+    <div class="expense-date">
+        <div class='expense-date__month'>Tanggal Lahir</div>
+        <div class='expense-date__month'>October</div>
+        <div class='expense-date__year'>1999</div>
+        <div class='expense-date__day'>11</div>
+      </div>
+  </div>
+    <div class='expense-item__description'>
+        <h3>Nama: Vi</h3>
+        <h3>Email: avisena.rahman@zettacamp.pro</h3>
+        <h3>Gender: Male</h3>
+        <h3>Office: Indonesia</h3>
+        <h3>Vaccine: Sinovac, Moderna</h3>
+        <h3>Phone: +6283867116122</h3>
+        <div class='expense-item__price'>Usia: 22</div>
+    </div>
+</div>
+
+<div class="expense-item">
+    <div class="improve">
+      <div class="expense-date">
+          <img src="https://external-preview.redd.it/BWEdsYiHkHk5Fq77rJNlB7iiFArGhTWrUlSOwc-F2dQ.jpg?auto=webp&s=cb6ea4a3dafd4d32051e545bbb33f50c3720e67b"/>
+      </div>
+      <div class="expense-date">
+          <div class='expense-date__month'>Tanggal Lahir</div>
+          <div class='expense-date__month'>January</div>
+          <div class='expense-date__year'>1998</div>
+          <div class='expense-date__day'>23</div>
+        </div>
+    </div>
+      <div class='expense-item__description'>
+          <h3>Nama: Rana</h3>
+          <h3>Email: rana22@gmail.com</h3>
+          <h3>Gender: Feale</h3>
+          <h3>Office: India</h3>
+          <h3>Vaccine: Pfizer, Moderna</h3>
+          <h3>Phone: +915657233 </h3>
+          <div class='expense-item__price'>Usia: 23</div>
+      </div>
+  </div>
+
+
+</body>
+<footer>
+    <p style="text-align:center;">Made By Vi during Zettacamp 2022</p>
+  </footer>
+</html>
