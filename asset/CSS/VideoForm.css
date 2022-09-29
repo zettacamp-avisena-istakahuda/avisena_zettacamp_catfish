@@ -1,0 +1,80 @@
+.header{
+    height: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+   video{
+    width:100%; 
+    height:100vh;
+    }
+
+  .ForVideo{
+    width: 100%;
+    height: 300px;
+  }
+  .layer{
+    background-color: rgba(191, 64, 191, 0.3);
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+  }
+  .OverVideo{
+    position: absolute;
+    width: 350px;
+    margin-left: 37%;
+    margin-top: 15vh;
+    display: flex;
+    flex-direction:column;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: white;
+  }
+
+  .OverVideoAnimation1{
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    margin-left: 17%;
+    margin-top: 19vh;
+    animation: mymove 5s infinite;
+  }
+  .OverVideoAnimation2{
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    margin-left: 77%;
+    margin-top: 60vh;
+    animation: mymove 5s infinite;
+  }
+  .VideoandFormBorder{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top:60vh;
+  }
+
+  .inner-box{
+    width: 50%;
+    height: 90%;
+    background-color:#001A6C;
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-start;
+    border-radius: 15px;
+    margin-top: 15px;
+    margin: auto;
+   }
+   .inner-box-text{
+    margin-left: 5px;
+    width:100%;
+    margin-bottom: 5px;
+    text-align: center;
+   }
+   label{
+    color: white;
+   }
+  @keyframes mymove {
+    100% {transform: rotate(360deg);}
+  }
