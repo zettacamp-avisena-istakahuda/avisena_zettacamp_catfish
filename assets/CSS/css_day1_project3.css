@@ -1,0 +1,47 @@
+body {
+    background-color: black;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+}
+
+.imageContainer {
+    width: 300px;
+    height: 300px;
+    margin-left: 13rem;
+    margin-top: 8rem;
+}
+
+.myImg {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+}
+.myInfo{
+    width:600px;
+    height:500px;
+    margin-top: 7rem;
+    margin-left: 15px;
+    padding-left:2rem;
+}
+p{
+    color:white;
+}
+
+.name{
+    font-size:35px;
+}
+.age{
+    font-size:25px;
+}
+.firstSpan{
+    font-size: 20px;
+    color:darkorange;
+}
+
+.secondSpan{
+    font-size: 17px;
+    color:darkorange;
+}
