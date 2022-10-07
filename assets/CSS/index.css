@@ -1,34 +1,51 @@
-body>p:nth-child(1) {
+.displayFlex {
+    display: flex;
+}
+
+.direction-column {
+    flex-direction: column;
+}
+
+.direction-row {
+    flex-direction: row;
+}
+
+header>a>p {
     text-align: center;
     font-size: 35px;
     font-family: 'Segoe UI';
-    margin-bottom: 0;
+    margin: 9px 0 0px 0;
+    color: white;
 }
 
 body>div {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 5rem 0;
 }
 
-.cardContainer {
+div.cardContainer {
     width: fit-content;
     height: 350px;
-    display: flex;
-    flex-direction: row;
     justify-content: flex-start;
     text-align: center;
 }
 
-.cardContainer:nth-child(odd){
-    margin: 0 0;
-}
-.cardContainer:nth-child(even){
-    margin: 1rem 0;
+.cardContainer:first-child {
+    margin: 0 0 1rem 0 !important;
 }
 
-.card:nth-child(even){
-    margin:0 3rem;
+.cardContainer:last-child {
+    margin: 1rem 0 0 0 !important;
+}
+
+.cardContainer {
+    margin: 2rem 0;
+}
+
+.card:nth-child(even) {
+    margin: 0 5rem;
 }
 
 /* .row-header-footer {
@@ -39,7 +56,7 @@ body>div {
     margin: 1rem 0;
 } */
 
-.card {
+div.card {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -49,7 +66,6 @@ body>div {
     box-sizing: border-box;
     padding: 5px;
     box-shadow: 6px 3px 10px;
-    position: relative;
 }
 
 .card>img {
@@ -59,50 +75,73 @@ body>div {
     object-fit: cover;
 
 }
-.card>p:nth-child(n+2){
+
+.card>p:nth-child(n+2) {
     margin: 0;
 }
-.card>p:nth-child(2){
+
+.card>p:nth-child(2) {
     font-weight: 700;
     font-size: 20px;
 }
-.card>a{
+
+.card>a {
     margin-left: 55px;
+    margin-top: 30px;
+    text-decoration: none;
 }
-.button{
-    width:45%;
+
+.button {
+    width: 60%;
     height: 40px;
     background-color: red;
-    position: absolute;
     bottom: 1rem;
     border-radius: 5px;
 }
 
-.button>p::before{
+.button>p::before {
     content: "View Page";
 }
 
-.button>p{
-    color:white;
+.button>p {
+    color: white;
     text-align: center;
-    margin-top: 10px;
+    top: 10px;
+    position: relative;
 }
-footer{
-    width:100%;
+
+.pos-header-footer {
+    position: fixed;
+    right: 0;
+}
+
+header {
+    top: 0;
+    z-index: 1;
+    width: 100%;
     height: 70px;
     background-color: black;
     display: flex;
     flex-direction: row;
-    justify-content: center
+    justify-content: center;
 }
-footer a{
+
+footer {
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+footer a {
     text-decoration: none;
     color: white;
     margin: 23px 7px;
 }
 
-.card:hover{
-    -ms-transform: scale(1.05); 
-    -webkit-transform: scale(1.05); 
-    transform: scale(1.05); 
-  }
+.card:hover {
+    transform: scale(1.05);
+}
