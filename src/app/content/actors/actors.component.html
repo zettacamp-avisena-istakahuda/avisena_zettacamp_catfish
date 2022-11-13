@@ -1,0 +1,10 @@
+<div class="cardList">
+    <mat-card class="example-card" [routerLink]="['/content/detail-actor', a.name]" *ngFor="let a of actorData">
+        <img mat-card-image src="{{a.picture}}" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+            <br><br>
+            <mat-card-title>{{a.name}}</mat-card-title>
+            <mat-card-subtitle>{{a.movie}}</mat-card-subtitle>
+        </mat-card-content>
+    </mat-card>
+</div>

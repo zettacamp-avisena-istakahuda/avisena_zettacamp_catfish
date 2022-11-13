@@ -1,0 +1,35 @@
+<mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Detail">
+        <div class="movieInfo">
+            <img src="{{pictURL}}" alt="">
+            <div class="movieInfoText">
+                <p>Title: {{title}} </p>
+                <p>Released: {{year}} </p>
+                <p>Distributor: {{distributor}} </p>
+                <p>Producers:</p>
+                <ul>
+                    <li *ngFor="let a of this.producers">
+                        {{a}}
+                    </li>
+                </ul>
+                <p>Editors:</p>
+                <ul>
+                    <li *ngFor="let a of this.editors">
+                        {{a}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Actors">
+        <div class="cardList">
+            <mat-card class="example-card" *ngFor="let a of this.actorsData">
+                <img mat-card-image src="{{a.picture}}" alt="Photo of a Shiba Inu">
+                <mat-card-content>
+                    <br><br>
+                    <mat-card-title>{{a.name}}</mat-card-title>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </mat-tab>
+</mat-tab-group>

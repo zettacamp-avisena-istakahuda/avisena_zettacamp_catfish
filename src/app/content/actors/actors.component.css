@@ -1,0 +1,28 @@
+.example-card {
+    height: 400px;
+    width: 250px;
+    margin: 20px;
+}
+
+.example-card:hover {
+    transform: scale(1.1);
+    transition: transform .3s ease;
+}
+
+img {
+    background-size: cover;
+    max-height: 300px;
+}
+
+.cardList {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    text-align: center;
+    margin-top: unset;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 8rem;
+    margin-top: 3rem;
+}

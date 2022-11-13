@@ -1,0 +1,34 @@
+
+
+    <!-- <mat-toolbar>
+      <span>My App</span>
+      <button  (click)="toggleSidenav()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar> -->
+
+<mat-sidenav-container class="tp-container">
+  <mat-sidenav mode="side" [opened]="isShowing">
+    <section class="tp-section">
+      <a style="text-decoration:none; color:white;" routerLink='content/movies'><span>Movies</span></a>
+    </section>
+    <section class="tp-section">
+      <a style="text-decoration:none; color:white;" routerLink="content/actors"><span>Actors</span></a>
+    </section>
+    <section class="tp-section">
+      <a style="text-decoration:none; color:white;" routerLink="content/your-account"><span>Your Account</span></a>
+    </section>
+  </mat-sidenav>
+  <mat-sidenav-content>
+
+
+    <button class="buttonArrow" mat-button (click)="toggleSidenav()">
+      <mat-icon *ngIf="!isShowing">keyboard_arrow_right</mat-icon>
+      <mat-icon *ngIf="isShowing">keyboard_arrow_left</mat-icon>
+    </button>
+
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
