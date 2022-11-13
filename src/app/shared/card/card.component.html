@@ -1,0 +1,16 @@
+
+<div class="card">
+    
+    <div *ngIf="checkAmount(cardID)==0" style="position: relative;">
+        <img src="../../../assets/image/sold_out.png">
+    </div>
+
+    <img [src]="getURL(cardID)" (click)="cardRefreshed.emit(cardID)">
+    <p class="title">{{cardID}}</p>
+    <p>{{getPrice(cardID)}}</p>
+    <p>Amount: {{checkAmount(cardID)}}</p>
+
+    <div class="button" (click)="cardSelected.emit(cardID)" *ngIf="checkAmount(cardID)!=0">
+        <p>Buy</p>
+    </div>
+</div>

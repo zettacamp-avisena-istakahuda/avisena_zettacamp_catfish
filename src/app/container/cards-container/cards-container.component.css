@@ -1,0 +1,66 @@
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    width: 67%;
+    text-align: center;
+    margin-top: unset;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 18rem;
+}
+
+.VideoandFormBorder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 60vh;
+    text-align: center;
+}
+
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    margin: 3rem 3rem;
+}
+
+input {
+    width: 20%;
+    margin-left: 5rem;
+    margin-top: 5px;
+}
+
+
+p{
+    color:white;
+}
+app-card>.card {
+    display: flex;
+    flex-direction: column;
+    height:500px;
+    width: 220px;
+    margin: 20px;
+    border: 2px solid gray;
+    box-sizing: border-box;
+    padding: 5px;
+    box-shadow: 6px 3px 10px;
+    color: black;
+}
+
+app-card>.card>div>img{
+    position: absolute;
+    width:100%;
+    z-index:1;
+    left:0;
+    top:50px;
+}
+
+app-card>.card>img {
+    height: 50%;
+}
+
+app-card>.card>.title {
+    margin-top: 10px;
+    font-weight: 700;
+    font-size: 20px;
+}

@@ -1,0 +1,31 @@
+<div class="VideoandFormBorder">
+   <p style="
+       font-size:30px; 
+       font-family:'Franklin Gothic Medium'; 
+       margin-top: 2.6rem;
+       ">
+      OUR MOST POPULAR PRODUCTS</p>
+</div>
+
+<div class="cardContainer">
+
+   <app-card *ngFor="let a of data" (cardRefreshed)="logCardRefreshed($event)" (cardSelected)="logCardClick($event)"
+      [cardID]=a.id>
+   </app-card>
+
+   <a href="./shopping_list.html" style="
+      margin-top:11rem;
+      margin-left:5px;
+      ">View More →</a>
+
+
+</div>
+<div class="formContainer">
+   <p>Change Image (enter URL): </p> <input *ngFor="let b of data" (keyup)="changeImage($event, b.id)" [value]=b.url>
+   <p style="
+    margin:unset;
+    margin-top:2rem;
+   ">Most Bought Item</p>
+      <p style="margin:unset;">{{getMostBoughtID()}}</p>
+   <p style="margin:unset;">{{getMostBoughtAmount()}}</p>
+</div>

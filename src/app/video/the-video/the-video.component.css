@@ -1,0 +1,45 @@
+video {
+    width: 100%;
+    height: 100vh;
+}
+
+.ForVideo {
+    width: 100%;
+    height: 300px;
+}
+
+.layer {
+    background-color: rgba(191, 64, 191, 0.3);
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+}
+
+.OverVideo h1 {
+    color: white;
+    font-size: 70px;
+}
+
+.OverVideoAnimation1 {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    margin-left: 17%;
+    margin-top: 19vh;
+    animation: mymove 5s infinite;
+}
+
+.OverVideoAnimation2 {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    margin-left: 77%;
+    margin-top: 60vh;
+    animation: mymove 5s infinite;
+}
+
+@keyframes mymove {
+    100% {
+        transform: rotate(360deg);
+    }
+}
