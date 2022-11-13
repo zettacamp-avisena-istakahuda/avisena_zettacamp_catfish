@@ -1,0 +1,85 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="idFilter">
+    <th mat-header-cell *matHeaderCellDef>
+
+    </th>
+  </ng-container>
+  <ng-container matColumnDef="nameFilter">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-form-field appearance="outline">
+        <input matInput [formControl]="lastNameFilter" placeholder="Last Name" #input>
+      </mat-form-field>
+    </th>
+  </ng-container>
+
+  <ng-container matColumnDef="typeFilter">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-form-field appearance="outline">
+        <input matInput [formControl]="userTypeFilter" placeholder="User Type" #input>
+      </mat-form-field>
+    </th>
+  </ng-container>
+  <ng-container matColumnDef="emailFilter">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-form-field appearance="outline">
+        <input matInput [formControl]="emailFilter" placeholder="E-mail" #input>
+      </mat-form-field>
+    </th>
+  </ng-container>
+  <ng-container matColumnDef="statusFilter">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-form-field>
+        <mat-select [formControl]="userStatusFilter" placeholder="Status">
+          <mat-option *ngFor="let a of status" [value]="a.value">
+            {{a.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </th>
+  </ng-container>
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> No. </th>
+    <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.civility + ". " + element.last_name + ", " + element.first_name}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef> Type </th>
+    <td mat-cell *matCellDef="let element"> {{element.company.user_type}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef> E-mail </th>
+    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef> Status </th>
+    <td mat-cell *matCellDef="let element">
+      <div *ngIf="element.user_status === 'active'; then active else inActive"></div>
+      <ng-template #active><mat-icon [ngStyle]="{'color':'green'}" *ngIf="element.user_status === 'active'; else inActive">done</mat-icon></ng-template>
+      <ng-template #inActive><mat-icon [ngStyle]="{'color':'red'}" #inActive>close</mat-icon></ng-template>
+
+
+      <!-- <mat-icon [ngStyle]="{'color':'green'}" *ngIf="element.user_status === 'active'; else inActive">done</mat-icon>
+      <mat-icon [ngStyle]="{'color':'red'}" #inActive>close</mat-icon> -->
+    </td>
+  </ng-container>
+
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedFilter"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" colspan="4">No data matching the filter ""</td>
+  </tr>
+</table>
