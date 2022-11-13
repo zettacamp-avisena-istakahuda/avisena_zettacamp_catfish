@@ -1,0 +1,74 @@
+<div class="form">
+
+    <label>
+        {{ 'HOME.SELECT' | translate }}
+        <select #langSelect (change)="translate.use(langSelect.value)">
+          <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+        </select>
+      </label>
+
+    <h1>{{'HOME.User ' + action2 + ' Page' | translate}}</h1>
+    <form [formGroup]="creationForm1" (ngSubmit)="onSubmit()">
+        <mat-form-field class="col-10">
+            <input matInput type="text" placeholder="{{'HOME.ID' | translate}}" id="id" formControlName="ID">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="col-12">
+            <input matInput type="text" placeholder="{{'HOME.NAME' | translate}}" id="name" formControlName="Name">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="col-12">
+            <input matInput type="number" min="0" placeholder="{{'HOME.AGE' | translate}}" id="age" formControlName="Age">
+        </mat-form-field>
+        <br>
+        <mat-radio-group formControlName="Gender">
+            <div *ngFor="let gender of genders">
+                <mat-radio-button [value]=gender>{{'HOME.'+gender | translate}}</mat-radio-button>
+                <br><br>
+            </div>
+        </mat-radio-group>
+        <br>
+        <mat-form-field class="col-12">
+            <input matInput type="text" placeholder="{{'HOME.EMAIL' | translate}}" id="email" formControlName="Email">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-select placeholder="{{'HOME.POSITION' | translate}}" formControlName="Position">
+                <mat-option *ngFor="let a of position" [value]="a.value">
+                    {{a.value}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-select placeholder="{{'HOME.MARITAL' | translate}}" formControlName="Marital">
+                <mat-option *ngFor="let a of marital" [value]="a.value">
+                    {{'HOME.'+a.value | translate}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br>
+        <div formGroupName="addresses">
+            <mat-form-field class="col-10">
+                <input matInput type="text" placeholder="{{'HOME.ADDRESS' | translate}}" formControlName="Address">
+            </mat-form-field>
+            <br>
+            <mat-form-field class="col-10">
+                <input matInput type="number" placeholder="{{'HOME.ZIPCODE' | translate}}" formControlName="Zipcode">
+            </mat-form-field>
+            <br>
+            <mat-form-field class="col-10">
+                <input matInput type="text" placeholder="{{'HOME.CITY' | translate}}" formControlName="City">
+            </mat-form-field>
+            <br>
+            <mat-form-field class="col-10">
+                <input matInput type="text" placeholder="{{'HOME.COUNTRY' | translate}}" formControlName="Country">
+            </mat-form-field>
+            <br>
+        </div>
+        <button mat-raised-button type="submit" color="primary">{{action}}</button>
+    </form>
+
+
+    
+</div>

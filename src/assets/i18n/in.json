@@ -1,0 +1,23 @@
+{
+  "HOME": {
+    "ID": "Nomor ID",
+    "NAME": "Nama",
+    "AGE": "Usia",
+    "YO": " tahun",
+    "GENDER": "Jenis Kelamin",
+    "EMAIL": "Surel",
+    "POSITION": "Posisi",
+    "MARITAL": "Status Pernikahan",
+    "ADDRESS": "Alamat",
+    "ZIPCODE": "Kode Pos",
+    "CITY": "Kota",
+    "COUNTRY": "Negara",
+    "Single": "Lajang",
+    "Married": "Menikah",
+    "Male": "Laki-Laki",
+    "Female": "Perempuan",
+    "User Creation Page": "Halaman Buat User",
+    "User Edit Page": "Halaman Edit User",
+    "SELECT": "Ganti Bahasa"
+  }
+}

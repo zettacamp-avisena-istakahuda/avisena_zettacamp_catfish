@@ -1,0 +1,24 @@
+{
+    "HOME": {
+      "ID": "ID Number",
+      "NAME": "Name",
+      "AGE": "Age",
+      "YO": " years old",
+      "GENDER": "Gender",
+      "EMAIL": "E-mail",
+      "POSITION": "Position",
+      "MARITAL": "Marital Status",
+      "ADDRESS": "Address",
+      "ZIPCODE": "Zip Code",
+      "CITY": "City",
+      "COUNTRY": "Country",  
+      "Single": "Single",
+      "Married": "Married",
+      "Male": "Male",  
+      "Female": "Female",
+      "User Creation Page": "User Creation Page",
+      "User Edit Page": "User Edit Page",    
+      "SELECT": "Change language"
+    }
+}
+  
