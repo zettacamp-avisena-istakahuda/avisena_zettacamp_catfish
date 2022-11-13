@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="./assets/JS/index.js">
+    </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Purchase</title>
+</head>
+
+<body style="text-align: center;">
+
+    <form action="" id="bookInfo">
+        <label for="">Book Name:</label><br>
+        <input type="text" id="bookName"><br><br>
+
+        <label for="">Price:</label><br>
+        <input type="number" id="bookPrice"><br><br>
+
+        <label for="">Discount:</label><br>
+        <input type="number" min="0" max="1" step="0.05" id="bookDiscount"><br><br>
+
+        <label for="">Tax:</label><br>
+        <input type="number" min="0" max="1" step="0.05" id="bookTax"><br><br>
+
+        <label for="">Amount of Stock:</label><br>
+        <input type="number" id="bookAmount"><br><br>
+
+        <label for="">Amount of Purchased Books:</label><br>
+        <input type="number" id="bookPurchased"><br><br>
+
+        <label for="">Term of Credit:</label><br>
+        <input type="number" step="1" max="12" id="termOfCredit"><br><br>
+
+        <input type="button" value="Submit" id="btnSubmit" onclick="myFunction()" />
+    </form>
+    <br><br><br>
+    <hr>
+    <p id="bookTitle"></p>
+    <p id="Price"></p>
+    <p id="youGot"></p>
+    <p id="youSave"></p>
+    <p id="tax"></p>
+    <p id="needToPay"></p> <br>
+    <h3 id="booksRemaining"></h3><br>
+    <p id="credit"></p>
+
+
+
+</body>
+
+
+</html>
