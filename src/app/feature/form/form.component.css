@@ -1,0 +1,14 @@
+form {
+    margin-left: 10%;
+}
+
+button {
+    margin-left: 10rem;
+}
+
+.loading {
+    position: fixed;
+    left: 50%;
+    top: 29%;
+    z-index: 3;
+}

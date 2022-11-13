@@ -1,0 +1,15 @@
+<mat-form-field style="margin-left:10%" appearance="outline">
+    <input matInput [formControl]="searchName" placeholder="Search Name">
+    <p style="color: red" *ngIf="checkLength">Must atleast 4 characters</p>
+  </mat-form-field>
+  <br>
+
+  <mat-card *ngFor="let a of dataUser; trackBy:trackByUserCode">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{a?.first_name}}</mat-card-title>
+      <mat-card-subtitle>{{a?.last_name}}</mat-card-subtitle>
+      <mat-card-subtitle>{{'Sex: ' + a?.sex}}</mat-card-subtitle>
+      <mat-card-subtitle>{{'Office Phone: ' + a?.office_phone}}</mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>

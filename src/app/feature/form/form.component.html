@@ -1,0 +1,51 @@
+<form [formGroup]="createPromoForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <input matInput type="text" formControlName="ref" placeholder="Ref">
+
+      <mat-error *ngIf="this.createPromoForm.get('ref').invalid && this.createPromoForm.get('ref').touched"
+        class="alert alert-danger"> Ref is needed
+      </mat-error><br>
+    </mat-form-field> <br><br>
+
+    <mat-form-field appearance="outline">
+      <input matInput type="text" formControlName="title" placeholder="Title">
+
+      <mat-error *ngIf="this.createPromoForm.get('title').invalid && this.createPromoForm.get('title').touched"
+        class="alert alert-danger"> Title is needed
+      </mat-error><br>
+    </mat-form-field><br><br>
+
+    <mat-form-field appearance="outline">
+      <input matInput type="text" formControlName="sub_title" placeholder="Subtitle">
+
+      <mat-error
+        *ngIf="this.createPromoForm.get('sub_title').invalid && this.createPromoForm.get('sub_title').touched"
+        class="alert alert-danger"> Subtitle is needed
+      </mat-error><br>
+    </mat-form-field><br><br>
+
+    <mat-form-field appearance="outline">
+      <input matInput type="text" formControlName="description" placeholder="Description">
+
+      <mat-error
+        *ngIf="this.createPromoForm.get('description').invalid && this.createPromoForm.get('description').touched"
+        class="alert alert-danger"> Description is needed
+      </mat-error><br>
+    </mat-form-field><br><br>
+
+    <mat-form-field appearance="outline">
+      <input matInput type="text" formControlName="image_url" placeholder="Image URL">
+
+      <mat-error
+        *ngIf="this.createPromoForm.get('image_url').invalid && this.createPromoForm.get('image_url').touched"
+        class="alert alert-danger"> Image URL is needed
+      </mat-error><br>
+    </mat-form-field><br><br>
+    <button mat-raised-button [disabled]="!createPromoForm.valid" color="primary">SUBMIT</button>
+  </form>
+
+  <div class="loading">
+    <mat-spinner *ngIf="!this.loadingDetect" mode="indeterminate" value="50"></mat-spinner>
+  </div>
+  <br>
+  
