@@ -18,7 +18,9 @@
       "Female": "Female",
       "User Creation Page": "User Creation Page",
       "User Edit Page": "User Edit Page",    
-      "SELECT": "Change language"
+      "SELECT": "Change language",
+      "REMOVE": "Remove",
+      "ADD": "Add"
     }
 }
   

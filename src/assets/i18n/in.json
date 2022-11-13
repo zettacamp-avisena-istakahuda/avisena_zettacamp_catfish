@@ -16,8 +16,10 @@
     "Married": "Menikah",
     "Male": "Laki-Laki",
     "Female": "Perempuan",
-    "User Creation Page": "Halaman Buat User",
+    "User Creation Page": "Halaman Pembuatan User",
     "User Edit Page": "Halaman Edit User",
-    "SELECT": "Ganti Bahasa"
+    "SELECT": "Ganti Bahasa",
+    "REMOVE": "Hapus",
+    "ADD": "Tambah"
   }
 }

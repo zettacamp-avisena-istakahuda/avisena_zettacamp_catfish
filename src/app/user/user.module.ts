@@ -13,13 +13,15 @@ import { RouterModule } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { RemovewhitespacesPipe } from './custompipe/removewhitespaces.pipe';
+import { RemoveaccentPipe } from './custompipe/removeaccent.pipe';
 
 @NgModule({
-  declarations: [UserCreationComponent, UserListComponent],
+  declarations: [UserCreationComponent, UserListComponent, RemovewhitespacesPipe, RemoveaccentPipe],
   imports: [
     CommonModule, MatInputModule, MatRadioModule, MatSelectModule,
-    ReactiveFormsModule, MatButtonModule, MatCardModule, RouterModule, MatIconModule,
-    // ngx-translate and the loader module
+    ReactiveFormsModule, MatButtonModule, MatCardModule, RouterModule, MatIconModule,FormsModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {

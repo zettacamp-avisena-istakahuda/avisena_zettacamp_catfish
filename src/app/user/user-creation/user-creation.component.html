@@ -3,9 +3,10 @@
     <label>
         {{ 'HOME.SELECT' | translate }}
         <select #langSelect (change)="translate.use(langSelect.value)">
-          <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+            <option *ngFor="let lang of translate.getLangs()" [value]="lang"
+                [selected]="lang === translate.currentLang">{{ lang }}</option>
         </select>
-      </label>
+    </label>
 
     <h1>{{'HOME.User ' + action2 + ' Page' | translate}}</h1>
     <form [formGroup]="creationForm1" (ngSubmit)="onSubmit()">
@@ -13,13 +14,25 @@
             <input matInput type="text" placeholder="{{'HOME.ID' | translate}}" id="id" formControlName="ID">
         </mat-form-field>
         <br>
+        
         <mat-form-field class="col-12">
             <input matInput type="text" placeholder="{{'HOME.NAME' | translate}}" id="name" formControlName="Name">
+            <mat-error *ngIf="creationForm1.get('Name').hasError('validatorName')">
+                Please enter a valid name
+            </mat-error>
         </mat-form-field>
         <br>
         <mat-form-field class="col-12">
-            <input matInput type="number" min="0" placeholder="{{'HOME.AGE' | translate}}" id="age" formControlName="Age">
+            <!-- <input matInput [class.is-invalid]="creationForm1.get('Age').invalid"
+             type="number" min="0" placeholder="{{'HOME.AGE' | translate}}" id="age"
+                formControlName="Age"> -->
+            <input matInput type="number" min="0" placeholder="{{'HOME.AGE' | translate}}"
+                id="age" formControlName="Age">
+                <mat-error *ngIf="creationForm1.get('Age').errors['validatorAge']">
+                    Minimum is 10
+                </mat-error>
         </mat-form-field>
+        
         <br>
         <mat-radio-group formControlName="Gender">
             <div *ngFor="let gender of genders">
@@ -29,7 +42,11 @@
         </mat-radio-group>
         <br>
         <mat-form-field class="col-12">
-            <input matInput type="text" placeholder="{{'HOME.EMAIL' | translate}}" id="email" formControlName="Email">
+            <input matInput type="text"
+                placeholder="{{'HOME.EMAIL' | translate}}" id="email" formControlName="Email">
+            <mat-error *ngIf="creationForm1.get('Email').hasError('email')">
+                Please enter a valid email address
+            </mat-error>
         </mat-form-field>
         <br>
         <mat-form-field>
@@ -37,7 +54,7 @@
                 <mat-option *ngFor="let a of position" [value]="a.value">
                     {{a.value}}
                 </mat-option>
-            </mat-select>
+            </mat-select>   
         </mat-form-field>
         <br>
         <mat-form-field>
@@ -48,27 +65,44 @@
             </mat-select>
         </mat-form-field>
         <br>
-        <div formGroupName="addresses">
-            <mat-form-field class="col-10">
-                <input matInput type="text" placeholder="{{'HOME.ADDRESS' | translate}}" formControlName="Address">
-            </mat-form-field>
-            <br>
-            <mat-form-field class="col-10">
-                <input matInput type="number" placeholder="{{'HOME.ZIPCODE' | translate}}" formControlName="Zipcode">
-            </mat-form-field>
-            <br>
-            <mat-form-field class="col-10">
-                <input matInput type="text" placeholder="{{'HOME.CITY' | translate}}" formControlName="City">
-            </mat-form-field>
-            <br>
-            <mat-form-field class="col-10">
-                <input matInput type="text" placeholder="{{'HOME.COUNTRY' | translate}}" formControlName="Country">
-            </mat-form-field>
-            <br>
+
+        <div formArrayName="addresses">
+            <div *ngFor="let a of addresses.controls; let i=index">
+                <div [formGroupName]="i">
+                    <br>
+                    {{('HOME.ADDRESS' | translate) + ' ' + (i+1)}}
+                    <br>
+                    <!-- <mat-form-field class="col-12">
+                    <input matInput type="text" placeholder="{{'HOME.COUNTRY' | translate}}" id="name" formControlName="Country">
+                </mat-form-field> -->
+                    <mat-form-field>
+                        <mat-select placeholder="{{'HOME.COUNTRY' | translate}}" formControlName="Country">
+                            <mat-option *ngFor="let a of countries" [value]="a.country">
+                                {{a.country}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field> <br>
+                    <mat-form-field class="col-12">
+                        <input matInput type="text" placeholder="{{'HOME.CITY' | translate}}" id="name"
+                            formControlName="City">
+                    </mat-form-field> <br>
+                    <mat-form-field class="col-12">
+                        <input matInput type="text" placeholder="{{'HOME.ADDRESS' | translate}}" id="name"
+                            formControlName="Address">
+                    </mat-form-field> <br>
+                    <mat-form-field class="col-12">
+                        <input matInput type="text" placeholder="{{'HOME.ZIPCODE' | translate}}" id="name"
+                            formControlName="Zipcode">
+                          
+                    </mat-form-field> <br>
+                    <button *ngIf="addresses.length>1" (click)="removeAddresses(i)">{{'HOME.REMOVE' |
+                        translate}}</button> <br><br>
+                </div>
+            </div>
         </div>
+        <button type="button" (click)="addAddresses()">{{'HOME.ADD' | translate}}</button><br><br>
+
+
         <button mat-raised-button type="submit" color="primary">{{action}}</button>
     </form>
-
-
-    
 </div>

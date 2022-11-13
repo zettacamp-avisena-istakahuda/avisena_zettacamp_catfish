@@ -3,35 +3,52 @@
         <mat-icon>home</mat-icon>
     </button>
 </a>
-
+<div class="searchBar">
+    <mat-form-field class="col-12" appearance="outline" >
+        <input matInput [(ngModel)]="searchNama" type="text" placeholder="Search Name" id="search">
+    </mat-form-field>
+    <button mat-icon-button color="primary" (click)="searchName()">
+        <mat-icon>search</mat-icon>
+    </button>
+</div>
 
 
 <div class="cardList">
     <label>
         {{ 'HOME.SELECT' | translate }}
         <select #langSelect (change)="translate.use(langSelect.value)">
-          <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+            <option *ngFor="let lang of translate.getLangs()" [value]="lang"
+                [selected]="lang === translate.currentLang">{{ lang }}</option>
         </select>
-      </label>
-      
-    <div *ngFor="let a of data; let i = index;">
-        <mat-card >
-            <mat-card-title>{{a.Name}}</mat-card-title>
+    </label>
+
+    <div *ngFor="let a of data">
+        <mat-card>
+            <mat-card-title>{{a.Name | titlecase}}</mat-card-title>
             <mat-card-subtitle>{{a.ID}}</mat-card-subtitle>
+            <mat-card-content>{{ "Birthdate: " + a.birthDate | date:'longDate'}}</mat-card-content>
             <mat-card-content>{{a.Age + ('HOME.YO' | translate)}}</mat-card-content>
-            <mat-card-content>{{('HOME.GENDER' | translate) + ': ' + ('HOME.' + a.Gender | translate)}}</mat-card-content>
+            <mat-card-content>{{('HOME.GENDER' | translate) + ': ' + ('HOME.' + a.Gender | translate)}}
+            </mat-card-content>
             <mat-card-content>{{('HOME.EMAIL' | translate) + ': '+ a.Email}}</mat-card-content>
             <mat-card-content>{{('HOME.POSITION' | translate) + ': ' + a.Position}}</mat-card-content>
-            <mat-card-content>{{('HOME.MARITAL' | translate) + ': '+ ('HOME.' + a.Marital | translate)}}</mat-card-content>
-            <mat-card-content>{{('HOME.ADDRESS' | translate) + ': '+ a.addresses.Address}}</mat-card-content>
-            <mat-card-content>{{('HOME.ZIPCODE' | translate) + ': ' + a.addresses.Zipcode}}</mat-card-content>
-            <mat-card-content>{{('HOME.CITY' | translate) + ': ' + a.addresses.City}}</mat-card-content>
-            <mat-card-content>{{('HOME.COUNTRY' | translate) + ': ' + a.addresses.Country}}</mat-card-content>
+            <mat-card-content>{{('HOME.MARITAL' | translate) + ': '+ ('HOME.' + a.Marital | translate)}}
+
+            </mat-card-content>
+            <div *ngFor="let b of a.addresses; let i = index" style="margin-left:20px;">
+                {{'Alamat' + (i+1) }}
+                <mat-card-content>{{('HOME.COUNTRY' | translate) + ': ' + a.addresses[i].Country}}</mat-card-content>
+                <mat-card-content>{{('HOME.CITY' | translate) + ': ' + a.addresses[i].City}}</mat-card-content>
+                <mat-card-content>{{('HOME.ADDRESS' | translate) + ': '+ a.addresses[i].Address}}</mat-card-content>
+                <mat-card-content>{{('HOME.ZIPCODE' | translate) + ': ' + a.addresses[i].Zipcode}}</mat-card-content>
+                <br>
+            </div>
+
             <mat-card-actions>
                 <button mat-button (click)="edit(a.ID)">EDIT</button>
             </mat-card-actions>
         </mat-card>
         <br>
     </div>
-   
+
 </div>
