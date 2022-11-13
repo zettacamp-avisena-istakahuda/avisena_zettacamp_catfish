@@ -1,0 +1,35 @@
+{
+    "userForm": {
+      "_id": "ID",
+      "name": "Name",
+      "age": "Age",
+      "gender": "Gender",
+      "male": "Male",
+      "female": "Female",
+      "email": "E-mail",
+      "position": "Posisi",
+      "maritalStatus": "Marital Status",
+      "married": "Married",
+      "single": "Single",
+      "address": "address",
+      "zipCode": "Zip Code",
+      "city": "City",
+      "country": "Country",
+      "last_name": "Last Name",
+      "first_name": "First Name",
+      "type": "Type",
+      "DOB": "Date  of Birth",
+      "user_type": "User Type",
+      "Participant": "Participant",
+      "Mentor": "Mentor",
+      "ID_number": "ID Number",
+      "close": "Close"
+
+
+     
+     
+      },
+      "actions": {
+        "submit": "Input"
+      }
+    }

@@ -1,0 +1,37 @@
+{
+  "userForm": {
+    "_id": "ID",
+    "name": "Nama",
+    "age": "Umur",
+    "gender": "Jenis Kelamin",
+    "male": "Laki-laki",
+    "female": "Perempuan",
+    "email": "Surel",
+    "position": "Posisi",
+    "maritalStatus": "Status Perkawinan",
+    "married": "Menikah",
+    "single": "Belum Menikah",
+    "address": "Alamat",
+    "zipCode": "Kode Pos",
+    "city": "Kota",
+    "country": "Negara",
+    "last_name": "Nama Belakang",
+    "first_name": "Nama Depan",
+    "type": "Tipe",
+    "DOB": "Tanggal Lahir",
+    "user_type": "Tipe User",
+    "Participant": "Peserta",
+    "Mentor": "Pelatih",
+    "ID_number": "Nomor ID",
+    "close": "Tutup"
+
+
+
+
+   
+   
+    },
+    "actions": {
+      "submit": "Kirim"
+    }
+  }

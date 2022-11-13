@@ -1,0 +1,77 @@
+<h1>{{this.data.dataKey}}</h1>
+<div mat-dialog-content>
+    <div class="wrap">
+
+        <form [formGroup]="userForm2" (ngSubmit)="onSubmit2()">
+
+            <mat-form-field appearance="fill">
+                <!-- <mat-label>{{ "userForm._id" | translate }}</mat-label> -->
+                <input matInput type="number" formControlName="_id" placeholder="{{ 'userForm.ID_number' | translate }}">
+
+                <mat-error *ngIf="this.userForm2.get('_id').invalid && this.userForm2.get('_id').touched"
+                    class="alert alert-danger"> You Must Input your ID_Number </mat-error><br>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <!-- <mat-label>{{ "userForm.name" | translate }}</mat-label> -->
+                <input matInput type="text" formControlName="first_name" placeholder="{{'userForm.first_name' | translate}}">
+                <mat-error *ngIf="this.userForm2.get('first_name').invalid && this.userForm2.get('first_name').touched"
+                    class="alert alert-danger"> You Must Input Your First Name </mat-error>
+                <mat-error *ngIf="userForm2.get('first_name').hasError['forbiden']">jangan berkata kasar</mat-error><br>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <!-- <mat-label>{{ "userForm.name" | translate }}</mat-label> -->
+                <input matInput type="text" formControlName="last_name" placeholder="{{'userForm.last_name' | translate}}">
+                <mat-error *ngIf="this.userForm2.get('last_name').invalid && this.userForm2.get('last_name').touched"
+                    class="alert alert-danger"> You Must Input Your Last Name </mat-error>
+                <mat-error *ngIf="userForm2.get('last_name').hasError['forbiden']">jangan berkata kasar</mat-error><br>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <!-- <mat-label>{{ "userForm.name" | translate }}</mat-label> -->
+                <input matInput type="text" formControlName="email" placeholder="{{'userForm.email' | translate}}">
+                <mat-error *ngIf="this.userForm2.get('email').invalid && this.userForm2.get('email').touched"
+                    class="alert alert-danger"> You Must Input Your E-mail </mat-error>
+                <mat-error *ngIf="userForm2.get('email').hasError['forbiden']">jangan berkata kasar</mat-error><br>
+            </mat-form-field>
+            <br>
+
+            <mat-radio-group formControlName="civility" aria-label="Select an option">
+                <mat-label>Civility: </mat-label> <br>
+
+                <mat-radio-button value="MR">MR.</mat-radio-button>
+                <mat-radio-button value="MRS">MRS.</mat-radio-button>
+            </mat-radio-group>
+
+            <mat-form-field>
+                <mat-select formControlName="gender" placeholder="{{ 'userForm.gender' | translate }}">
+                    <mat-option value="Male">
+                        Male
+                    </mat-option>
+                    <mat-option value="Female">
+                        Female
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="this.userForm2.get('gender').invalid && this.userForm2.get('gender').touched"
+                    class="alert alert-danger"> You Must Input Your Gender </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'userForm.DOB' | translate }}</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="date_of_birth">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field><br>
+
+            <div class="buttonsub">
+                <button mat-raised-button color="primary">SUBMIT</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="warn" mat-dialog-close>{{ 'userForm.close' | translate }}</button>
+</div>

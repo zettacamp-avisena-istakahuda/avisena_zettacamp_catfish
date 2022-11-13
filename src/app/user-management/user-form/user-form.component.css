@@ -1,0 +1,32 @@
+.wrap {
+    background-color: #263e4a;
+    border: 2px solid;
+    border-radius: 15px;
+    margin: 1rem;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    color: whitesmoke;
+}
+
+.mat-radio-button, label{
+    color: aliceblue;
+    margin: 20px;
+}
+
+.mat-form-field {
+    width: 80%;
+    text-align: center;
+}
+
+.button{
+    text-align: left;
+    justify-content: center;
+}
+
+.buttonsub{
+    text-align: right;
+    justify-content: center;
+}
