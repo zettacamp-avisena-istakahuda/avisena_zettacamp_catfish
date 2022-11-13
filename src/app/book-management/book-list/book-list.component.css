@@ -1,0 +1,9 @@
+.content{
+    width: 620px;
+    height: 620px;
+    background-color: green;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}

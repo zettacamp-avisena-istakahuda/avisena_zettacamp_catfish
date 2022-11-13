@@ -1,0 +1,10 @@
+.content{
+    width: 650px;
+    height: 650px;
+    background-color: purple;
+    margin-left: 25px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    padding: 40px;
+    color: white;
+}

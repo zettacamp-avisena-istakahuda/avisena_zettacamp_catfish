@@ -1,0 +1,6 @@
+<div class="content">
+    <a *ngFor="let a of data" [routerLink]="['/bookInfo', a.id]">
+        <app-book-card  (cardSelected)="cardClick(a)" [title]="a.title" [bookTitle]="a">
+        </app-book-card>
+    </a> 
+</div>
