@@ -1,0 +1,18 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+div{
+    margin-left: 33%;
+}
+
+.form{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+::ng-deep .mat-card{
+    max-width: 400px;
+    margin-bottom: 8px;
+    border: 55px solid darkgreen;
+    border-radius: 30px !important;
+    border: #000 !important;
+   }

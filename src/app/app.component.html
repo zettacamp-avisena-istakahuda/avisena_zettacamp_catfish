@@ -1,0 +1,28 @@
+<div class="form">
+  <input type="text" [(ngModel)]="name" value="{{name}}" placeholder="Name" id="search"><br><br>
+  <input type="text" [(ngModel)]="email" value="{{email}}" placeholder="Email" id="search"><br><br>
+  <input type="text" [(ngModel)]="body" value="{{body}}" placeholder="Body" id="search"><br><br>
+  <input type="number" [(ngModel)]="postId" value="{{postId}}" placeholder="postId" id="search"><br><br>
+  <button mat-raised-button color="primary" (click)="submitData()">{{action | titlecase}}</button>
+  <button *ngIf="!isSubmit" (click) = "switchToSubmit()" style="margin-left:35px"mat-stroked-button>Switch to Submit</button>
+
+</div>
+
+
+<div *ngFor="let post of posts">
+  <mat-card>
+    <mat-card-title-group>
+      <mat-card-title>{{post.email}}</mat-card-title>
+    </mat-card-title-group>
+
+    <mat-card-content>
+      <p>{{post.name}}</p>
+      <p>{{post.body}}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click) = "editDataCard(post.id, post.postId, post.name, post.email, post.body)">EDIT</button>
+      <button mat-button (click)="deleteData(post.id)">DELETE</button>
+    </mat-card-actions>
+  </mat-card>
+  <br>
+</div>
