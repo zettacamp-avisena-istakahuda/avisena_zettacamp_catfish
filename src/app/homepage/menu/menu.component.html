@@ -1,0 +1,13 @@
+<app-navbar></app-navbar>
+
+<div class="content">
+    <div class="card-container" *ngFor="let a of dataMenu; let i = index;">
+        <img [src]="a.img" alt="">
+        <p>{{a.recipe_name}}</p>
+        <p>{{a.description}}</p>
+        <p>{{'Ingredients: ' + this.ingredients[i]}}</p>
+        <p>{{a.price | currency: "Rp. "}}</p>
+        <a *ngIf="a.available > 0" href="#" onclick="return false;" (click)="onAddCart()"><mat-icon [ngStyle]="{'color':'green'}">add_shopping_cart</mat-icon></a>
+        <img *ngIf="a.available <= 0" class="out-of-stock" src="../../../assets/images/stok-habis.png" alt="">
+    </div>
+</div>

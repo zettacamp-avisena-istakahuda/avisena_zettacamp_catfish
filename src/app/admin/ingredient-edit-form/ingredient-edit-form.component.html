@@ -1,0 +1,19 @@
+<div *ngIf="this.data.action != 'delete'">
+    <p>{{'Halaman ' + (this.data.action | titlecase) + ' Data'}}</p>
+    <mat-form-field appearance="standard">
+        <mat-label>Name</mat-label>
+        <input [formControl]="name" type="text" matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+        <mat-label>Stock</mat-label>
+        <input [formControl]="stock" type="number" matInput>
+    </mat-form-field>
+    <button (click)="onSubmit()" style="margin-left: 120px;" mat-flat-button color="primary">Submit</button>
+</div>
+
+<div *ngIf="this.data.action === 'delete'">
+<p>You sure to delete?</p>
+<button (click)="onDelete()" style="margin-left: 120px;" mat-flat-button color="warn">Yes</button>
+</div>
+

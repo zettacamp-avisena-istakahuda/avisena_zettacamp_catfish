@@ -1,0 +1,44 @@
+<mat-dialog-content>
+    <form [formGroup]="createRecipe" (ngSubmit)="onSubmit()">
+        <mat-form-field class="col-10">
+            <input matInput type="text" placeholder="Recipe Name" formControlName="recipe_name">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="col-10">
+            <input matInput type="text" placeholder="Image URL" formControlName="img">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="col-10">
+            <input matInput type="text" placeholder="Description" formControlName="description">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="col-10">
+            <input matInput type="number" placeholder="Price" formControlName="price">
+        </mat-form-field>
+        <br>
+        <div formArrayName="input">
+            <div *ngFor="let a of input.controls; let i=index">
+                <div [formGroupName]="i">
+                    <br>
+                    {{'Ingredient ' + (i+1)}}
+                    <br>
+    
+                    <mat-form-field>
+                        <mat-select placeholder="Choose the ingredient" formControlName="ingredient_id">
+                            <mat-option *ngFor="let a of dataIngredients" [value]="a.id">
+                                {{a.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field> <br>
+    
+                    <mat-form-field class="col-10">
+                        <input matInput type="number" placeholder="Amount of stock needed" formControlName="stock_used">
+                    </mat-form-field><br>
+                        <button *ngIf="input.length>1" (click)="removeInput(i)" mat-flat-button color="warn">{{'Remove this ingredient'}}</button> <br><br>
+                </div>
+            </div>
+        </div>
+        <button style="margin-left: 20px;" type="button" (click)="addInput()"  mat-raised-button>{{'Add more ingredient'}}</button><br><br>
+        <button style="margin-left: 60px;" mat-raised-button type="submit" color="primary">Submit</button>
+    </form>
+</mat-dialog-content>

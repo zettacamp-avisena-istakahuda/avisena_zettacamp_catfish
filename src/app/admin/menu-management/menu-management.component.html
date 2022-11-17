@@ -1,0 +1,43 @@
+<app-navbar></app-navbar>
+<h1 style="text-align:center; font-weight: 800;">Menu Management Page</h1>
+<div class="content">
+    <div class="card-container" *ngFor="let a of dataMenu; let i = index;">
+        <img [src]="a.img" alt="">
+        <p>{{a.recipe_name}}</p>
+        <p>{{a.description}}</p>
+        <p>{{'Ingredients: ' + this.ingredients[i]}}</p>
+        <p>{{a.price | currency: "Rp. "}}</p>
+        <a href="#" onclick="return false;" (click)="openDialogEdit(a, 'edit')">
+            <mat-icon [ngStyle]="{'color':'blue'}">edit</mat-icon>
+        </a>
+        <a href="#" onclick="return false;" (click)="deleteRecipe(a)">
+            <mat-icon [ngStyle]="{'color':'red'}">delete</mat-icon>
+        </a>
+        <!-- <div *ngIf="a.status === 'active'; then active else unpublished"></div>
+        <ng-template #active>
+            <a href="#" onclick="return false;" (click)="editStatus(a)">
+                <mat-icon [ngStyle]="{'color':'green'}">language</mat-icon>
+            </a>
+        </ng-template>
+        <ng-template #unpublished><a href="#" onclick="return false;" (click)="editStatus(a)">
+                <mat-icon [ngStyle]="{'color':'gray'}">language</mat-icon>
+            </a>
+        </ng-template> -->
+
+        <a *ngIf="a.status === 'active'" href="#" onclick="return false;" (click)="editStatus(a)">
+            <mat-icon [ngStyle]="{'color':'green'}">language</mat-icon>
+        </a>
+
+        <a *ngIf="a.status === 'unpublished'" href="#" onclick="return false;" (click)="editStatus(a)">
+            <mat-icon [ngStyle]="{'color':'gray'}">language</mat-icon>
+        </a>
+
+        <a *ngIf="a.status === 'deleted'" href="#" onclick="return false;" (click)="editStatus(a)">
+            <mat-icon [ngStyle]="{'color':'red'}">close</mat-icon>
+        </a>
+
+
+
+    </div>
+</div>
+<button (click)="openDialog()" mat-flat-button color="primary">Add New Menu</button>
