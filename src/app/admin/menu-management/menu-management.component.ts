@@ -4,6 +4,10 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateRecipeFormComponent } from '../create-recipe-form/create-recipe-form.component';
 import copy from 'fast-copy';
+import Swal from 'sweetalert2'
+import { MatTableDataSource } from '@angular/material/table';
+import { TranslateService } from "@ngx-translate/core";
+import { FormControl } from '@angular/forms';
 
 
 interface IMenu {
@@ -13,6 +17,7 @@ interface IMenu {
   price: number
   description: string
   status: string
+  extractedIngredient: string
   ingredients: Array<any>
 }
 
@@ -25,26 +30,52 @@ interface IMenu {
 export class MenuManagementComponent implements OnInit {
   private subsMenu = new SubSink();
   private subsMenuUpdate = new SubSink();
+  private subsPagination = new SubSink();
 
+  search_recipe_name = new FormControl();
+  page = 1;
+  max_page: number = 1
+  search!: string
+  isLoading = false;
   dataMenu: IMenu[] = []
-  ingredients: Array<string> = []
+  dataSource = new MatTableDataSource(this.dataMenu)
+  dataMenu2: IMenu[] = []
+  displayedColumns: string[] = ['recipe_name', 'description', 'ingredients', 'price', 'status', 'operation'];
+  displayedFilter: string[] = ['recipe_name_filter'];
 
-  constructor(private service: ApiServiceService, private dialog: MatDialog) { }
 
+  constructor(private service: ApiServiceService, private dialog: MatDialog, private translate: TranslateService ) { }
+  
   ngOnInit(): void {
-    this.subsMenu.sink = this.service.getAllRecipes().valueChanges.subscribe((resp: any) => {
-      this.dataMenu = resp.data.getAllRecipes.data
-      this.ingredients = this.service.extractIngredients(this.dataMenu)
+    this.subsPagination.sink = this.service.getAllRecipesPagination(this.page, this.search).valueChanges.subscribe((resp: any) => {
+      this.dataMenu = resp.data.getAllRecipes.data      
+      this.dataMenu2 = this.service.extractIngredientsTable(this.dataMenu)
+      this.dataSource = new MatTableDataSource(this.dataMenu2)
+      this.max_page = resp.data.getAllRecipes.max_page
     })
 
-    this.service.getAllRecipes().refetch()
+    this.search_recipe_name.valueChanges.subscribe((val) => {
+      this.page = 1
+      this.search = val
+      this.subsPagination.sink = this.service.getAllRecipesPagination(1, val).valueChanges.subscribe((resp: any) => {
+        this.dataMenu = resp.data.getAllRecipes.data      
+        this.dataMenu2 = this.service.extractIngredientsTable(this.dataMenu)
+        this.dataSource = new MatTableDataSource(this.dataMenu2)
+        this.max_page = resp.data.getAllRecipes.max_page
+      })
+      this.service.getAllRecipesPagination(this.page, this.search).refetch()
+     });
+
+    this.service.getAllRecipesPagination(this.page, this.search).refetch()
   }
 
   openDialog(): void {
     this.dialog.open(CreateRecipeFormComponent, {
       width: '250px',
       data: {
-        action: 'submit'
+        action: 'submit',
+        page: this.page,
+        search: this.search
       }
 
     });
@@ -55,13 +86,16 @@ export class MenuManagementComponent implements OnInit {
       width: '250px',
       data: {
         selectedCard: selectedCard,
-        action: action
+        action: action,
+        page: this.page,
+        search: this.search
       }
 
     });
   }
 
   editStatus(data: any) {
+
     data = copy(data)
     if (data.status === 'active') {
       data.status = 'unpublished'
@@ -72,19 +106,74 @@ export class MenuManagementComponent implements OnInit {
     else {
       data.status = 'unpublished'
     }
-    this.subsMenuUpdate.sink = this.service.updateRecipeStatus(data).subscribe(resp => {
+    Swal.fire({
+      title: 'Do you want to edit status to ' + data.status + '?',
+      showDenyButton: false,
+      showCancelButton: true,
+      showConfirmButton: true,
+      denyButtonText: `Yes`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.isLoading = true
+        this.subsMenuUpdate.sink = this.service.updateRecipeStatus(data).subscribe(resp => {
+          if (resp) {
+            this.isLoading = false
+            this.service.getAllRecipesPagination(this.page, this.search).refetch()
+            Swal.fire('Menu status has been changed to ' + data.status)
+          }
+        })
+      }
     })
-    this.service.getAllRecipes().refetch()
+
   }
 
   deleteRecipe(data: any) {
-    let i = 0
-    data = copy(data)
-    data.status = 'deleted'
-    this.subsMenuUpdate.sink = this.service.updateRecipeStatus(data).subscribe(resp => {
+    Swal.fire({
+      title: 'Do you want to delete?',
+      showDenyButton: true,
+      showCancelButton: true,
+      showConfirmButton: false,
+      denyButtonText: `Yes`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isDenied) {
+        this.isLoading = true
+        data = copy(data)
+        data.status = 'deleted'
+        this.subsMenuUpdate.sink = this.service.updateRecipeStatus(data).subscribe(resp => {
+          if (resp) {
+            this.service.getAllRecipesPagination(this.page, this.search).refetch()
+            this.isLoading = false
+            Swal.fire('Menu deleted')
+          }
+        })
+      }
     })
-    this.service.getAllRecipes().refetch()
   }
 
+  previousPage(){
+    if(this.page>1){
+      this.page--
+      this.subsPagination.sink = this.service.getAllRecipesPagination(this.page, this.search).valueChanges.subscribe((resp: any) => {
+        this.dataMenu = resp.data.getAllRecipes.data
+        this.dataMenu2 = this.service.extractIngredientsTable(this.dataMenu)
+        this.dataSource = new MatTableDataSource(this.dataMenu2)
+      })
+      this.service.getAllRecipesPagination(this.page, this.search).refetch()
+    }
+  }
+  nextPage(){
+
+    if(this.page < this.max_page){
+      this.page++
+      this.subsPagination.sink = this.service.getAllRecipesPagination(this.page, this.search).valueChanges.subscribe((resp: any) => {
+        this.dataMenu = resp.data.getAllRecipes.data
+        this.dataMenu2 = this.service.extractIngredientsTable(this.dataMenu)
+        this.dataSource = new MatTableDataSource(this.dataMenu2)
+      }) 
+      this.service.getAllRecipesPagination(this.page, this.search).refetch()
+    }
+  }
 }
 

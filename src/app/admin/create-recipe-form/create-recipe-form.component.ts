@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms'
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { SubSink } from 'subsink';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 import copy from 'fast-copy';
+import Swal from 'sweetalert2'
+
 
 @Component({
   selector: 'app-create-recipe-form',
@@ -12,48 +14,54 @@ import copy from 'fast-copy';
   styleUrls: ['./create-recipe-form.component.css']
 })
 export class CreateRecipeFormComponent implements OnInit {
+  isLoading = false
+
   createRecipe: any
-  selectedRecipeID!:string
+  selectedRecipeID!: string
   private subsIngredients = new SubSink();
   dataIngredients: any = []
+  ingredientsToChoose: any = []
   constructor(
+    private dialog: MatDialogRef<CreateRecipeFormComponent>,
     private service: ApiServiceService,
     public fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-   }
+  }
 
   ngOnInit(): void {
     this.subsIngredients.sink = this.service.getAllIngredients().valueChanges.subscribe((resp: any) => {
       this.dataIngredients = resp.data.getAllIngredient.data
+      this.ingredientsToChoose = copy(this.dataIngredients)
+
     })
 
     this.createRecipe = new FormGroup({
-      'recipe_name': new FormControl(null),
+      'recipe_name': new FormControl(null, Validators.required),
       'description': new FormControl(null),
-      'img': new FormControl(null),
-      'price': new FormControl(null),
+      'img': new FormControl(null, Validators.required),
+      'price': new FormControl(null, Validators.required),
       input: this.fb.array([]),
     })
     if (this.data.action === 'edit') {
       let i = 0
-      this.selectedRecipeID= this.data.selectedCard.id
+      this.selectedRecipeID = this.data.selectedCard.id
       this.data.selectedCard = copy(this.data.selectedCard)
       this.data.selectedCard.input = this.data.selectedCard.ingredients
-       delete this.data.selectedCard.ingredients;
-       delete this.data.selectedCard.id;
-       delete this.data.selectedCard.status;
-       delete this.data.selectedCard.available;
-       delete this.data.selectedCard.__typename;
+      delete this.data.selectedCard.ingredients;
+      delete this.data.selectedCard.id;
+      delete this.data.selectedCard.status;
+      delete this.data.selectedCard.available;
+      delete this.data.selectedCard.__typename;
 
       for (let a of this.data.selectedCard.input) {
-        this.data.selectedCard.input[i].ingredient_id =  this.data.selectedCard.input[i].ingredient_id.id;
+        this.data.selectedCard.input[i].ingredient_id = this.data.selectedCard.input[i].ingredient_id.id;
         delete this.data.selectedCard.input[i].__typename;
         this.addInput()
         i++;
       }
       console.log(this.data.selectedCard)
-      this.createRecipe.setValue(this.data.selectedCard)
+      this.createRecipe.patchValue(this.data.selectedCard)
     }
     else {
       this.addInput()
@@ -67,8 +75,8 @@ export class CreateRecipeFormComponent implements OnInit {
 
   newInput(): FormGroup {
     return this.fb.group({
-      ingredient_id: [null],
-      stock_used: [null],
+      ingredient_id: [null, Validators.required],
+      stock_used: [null, Validators.required],
     })
   }
 
@@ -78,34 +86,64 @@ export class CreateRecipeFormComponent implements OnInit {
 
   removeInput(i: number) {
     this.input.removeAt(i);
+    this.onCheckIngredient()
   }
 
   onSubmit() {
 
-    if(this.data.action=='edit'){
-      this.subsIngredients.sink = this.service.updateRecipe(this.createRecipe.value, this.selectedRecipeID).subscribe(resp => {
-        console.log(this.createRecipe.value)
+    if (this.createRecipe.valid) {
+      this.isLoading = true
+      if (this.data.action == 'edit') {
+        this.subsIngredients.sink = this.service.updateRecipe(this.createRecipe.value, this.selectedRecipeID).subscribe(resp => {
+          if (resp) {
+            this.service.getAllRecipesPagination(this.data.page, this.data.search).refetch()
+            this.isLoading = false
+            Swal.fire({
+              icon: 'success',
+              title: 'Menu has been successfully edited',
+            })
+            this.dialog.close()
+          }
+        })
+      }
+      else {
+        this.subsIngredients.sink = this.service.createRecipe(this.createRecipe.value).subscribe(resp => {
+          if (resp) {
+            this.service.getAllRecipesPagination(this.data.page, this.data.search).refetch()
+            this.isLoading = false
+            Swal.fire({
+              icon: 'success',
+              title: 'Menu has been successfully submitted',
+            })
+            this.dialog.close()
+          }
+        })
+      }
+    }
+
+    else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Need to fill all the required forms',
       })
     }
-    else{
-      this.subsIngredients.sink = this.service.createRecipe(this.createRecipe.value).subscribe(resp => {
-        console.log(resp)
-      })
-    }
-  
-    this.service.getAllRecipes().refetch()
   }
 
-  // getData() {
-  //   let data: any = {}
-  //   data = this.userData.getData(id);
-  //   for (let a of data.addresses) {
-  //     this.addAddresses();
-  //   }
+  onCheckIngredient() {
+    this.ingredientsToChoose = copy(this.dataIngredients)
+    for (let b of this.createRecipe.value.input) {
+      let i = 0
+      for (let c of this.ingredientsToChoose) {
+        if (c.id === b.ingredient_id) {
+          this.ingredientsToChoose[i].choosenStatus = true
+        }
+        i++
+      }
+    }
+  }
 
-
-  //   this.action = 'EDIT'
-  //   this.action2 = 'Edit'
-  // }
+  onClose(){
+    this.dialog.close()
+  }
 
 }

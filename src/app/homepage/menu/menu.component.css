@@ -1,8 +1,11 @@
+
+
 .content {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    width: 100%;
+    width: 80%;
+    margin-left: 6rem;
 }
 
 .out-of-stock {
@@ -85,7 +88,11 @@
     margin-top: 200px
 }
 
-
+mat-form-field{
+    position: fixed;
+    bottom: 0;
+    right: 10px;
+}
 
 @keyframes slideInFromLeft {
     0% {

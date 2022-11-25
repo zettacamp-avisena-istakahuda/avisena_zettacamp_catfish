@@ -3,14 +3,23 @@ import { SubSink } from 'subsink';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { LoginFormComponent } from 'src/app/login/login-form/login-form.component';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2'
+import { FormControl } from '@angular/forms';
+import copy from 'fast-copy';
+
 
 interface IMenu {
+  id: string
   available: number
   recipe_name: string
   img: string
   price: number
   description: string
   ingredients: Array<any>
+}
+
+interface IOrder {
+  recipe_id: string
 }
 
 @Component({
@@ -20,25 +29,70 @@ interface IMenu {
 })
 export class MenuComponent implements OnInit {
   private subsPromo = new SubSink();
-  dataMenu: IMenu[] = []
+  private subsOrder = new SubSink();
+  private subsCart = new SubSink();
+
+
+  search_menu_name = new FormControl();
+
+  isLoading = false;
+  login!: string | null
+  cartAmount = 0
+
+  search!: string
+  dataCartAdded: any = []
+  dataMenu: any = []
+  dataOrder: IOrder[] = []
   ingredients: Array<string> = []
   constructor(private service: ApiServiceService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.subsPromo.sink = this.service.getActiveMenu().valueChanges.subscribe((resp: any) => {
+
+  
+
+    this.subsPromo.sink = this.service.getActiveMenu(this.search).valueChanges.subscribe((resp: any) => {
       this.dataMenu = resp.data.getActiveMenu.data
-      console.log(resp.data.getActiveMenu.data)
+      this.dataMenu = copy(this.dataMenu)
       this.ingredients = this.service.extractIngredients(this.dataMenu)
+      this.login = localStorage.getItem('token')
+      if (this.login) {
+        this.subsCart.sink = this.service.getAllTransactions('pending', true).valueChanges.subscribe((resp: any) => {
+          this.cartAmount = resp.data.getAllTransactions.data.length
+          this.dataCartAdded = resp.data.getAllTransactions.data;
+          this.cartStatus()
+        })
+      }
     })
 
-    this.service.getActiveMenu().refetch()
+
+
+    this.search_menu_name.valueChanges.subscribe((val) => {
+      this.search = val
+      this.subsPromo.sink = this.service.getActiveMenu(this.search).valueChanges.subscribe((resp: any) => {
+        this.dataMenu = resp.data.getActiveMenu.data
+        this.ingredients = this.service.extractIngredients(this.dataMenu)
+      })
+    });
+    this.service.getActiveMenu(this.search).refetch()
 
   }
 
-  onAddCart() {
-    let login = localStorage.getItem('token')
-    if (login) {
-         
+  onAddCart(id: string) {
+    if (this.login) {
+      this.isLoading = true;
+      this.subsOrder.sink = this.service.createTransaction(id).subscribe((resp: any) => {
+        if (resp) {
+          this.service.getAllTransactions('pending', true).refetch()
+          this.isLoading = false;
+          Swal.fire({
+            position: 'top',
+            icon: 'success',
+            title: 'Menu succesfully added to cart',
+            showConfirmButton: false,
+            timer: 1000
+          })
+        }
+      })
     }
     else {
       this.openDialog()
@@ -50,6 +104,20 @@ export class MenuComponent implements OnInit {
       width: '250px',
       panelClass: 'custom-modalbox',
     });
+  }
+
+  cartStatus() {
+    for (let a of this.dataCartAdded) {            
+      let i = 0;
+      for (let b of this.dataMenu) {        
+        if (a.menu[0].recipe_id.id === b.id) {
+          this.dataMenu[i].cartStatus = true
+        }
+        i++;
+      }
+    }
+    console.log(this.dataMenu);
+    
   }
 
 }

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import copy from 'fast-copy';
 
 interface input {
-ingredient_id: string
-stock_used: number
+  ingredient_id: string
+  stock_used: number
 }
 @Injectable({
   providedIn: 'root'
@@ -23,10 +24,10 @@ export class ApiServiceService {
           {
           message
           user{
-            email
-            fullName
+            role
+            }
           }
-          }
+          
       }`
     })
   }
@@ -47,7 +48,7 @@ export class ApiServiceService {
   }
 
   createRecipe(data: any): Observable<any> {
-    let a:input[] = data.input
+    let a: input[] = data.input
     return this.apollo.mutate({
       mutation: gql`mutation 
       CreateRecipe( $a: [ingredientInput]){
@@ -61,13 +62,29 @@ export class ApiServiceService {
             recipe_name
           }
       }`, variables: {
-         a
+        a
       }
     })
   }
 
+  createTransaction(id: string): Observable<any> {
+    return this.apollo.mutate({
+      mutation: gql`mutation Mutation{
+        createTransaction(input: {
+          recipe_id: "${id}"
+          amount: 1
+          note:" "
+        }) {
+          user_id {
+            first_name
+          }
+        }
+      }`
+    })
+  }
+
   updateRecipe(data: any, id: string): Observable<any> {
-    let a:input[] = data.input
+    let a: input[] = data.input
     return this.apollo.mutate({
       mutation: gql`mutation 
       UpdateRecipe( $a: [ingredientInput]){
@@ -82,15 +99,12 @@ export class ApiServiceService {
             recipe_name
           }
       }`, variables: {
-         a
+        a
       }
     })
   }
 
   updateRecipeStatus(data: any): Observable<any> {
-    console.log(data.id)
-    console.log(data.status)
-    let a:input[] = data.input
     return this.apollo.mutate({
       mutation: gql`mutation 
       UpdateRecipe{
@@ -104,8 +118,38 @@ export class ApiServiceService {
     })
   }
 
+  updateTransaction(id: string, action: string): Observable<any> {
+    return this.apollo.mutate({
+      mutation: gql`mutation 
+      UpdateTransaction{
+          updateTransaction(
+            id: "${id}"
+            option: ${action}
+            ) {
+            id
+          }
+      }`
+    })
+  }
 
-  updateIngredient(id: any, name?: any, stock?:any): Observable<any> {
+  updateTransactionNote(id: string, note: string): Observable<any> {
+    console.log(note);
+
+    return this.apollo.mutate({
+      mutation: gql`mutation 
+      UpdateTransaction{
+          updateTransaction(
+            id: "${id}"
+            note: "${note}"
+            ) {
+            id
+          }
+      }`
+    })
+  }
+
+
+  updateIngredient(id: any, name?: any, stock?: any): Observable<any> {
     return this.apollo.mutate({
       mutation: gql`mutation Mutation {
         updateIngredient(
@@ -120,11 +164,18 @@ export class ApiServiceService {
     })
   }
 
-  getActiveMenu() {
+  getActiveMenu(name: string) {
+    let a: any = ""
+    if (name) {
+      a = name;
+    }
     return this.apollo.watchQuery({
       query: gql`query GetActiveMenu {
-        getActiveMenu {
+        getActiveMenu(
+          recipe_name: "${a}"
+        ) {
           data {
+            id
             available
             recipe_name
             description
@@ -141,9 +192,42 @@ export class ApiServiceService {
     })
   }
 
-  getAllRecipes() {
+  getAllTransactions(status: string, isCart: boolean, fullName?: string) {
+    if(fullName == null){
+     fullName=""
+    }
     return this.apollo.watchQuery({
-      query: gql`query GetAllRecipes {
+      query: gql `query GetAllTransactions {
+      getAllTransactions(order_status: "${status}",
+        isCart: ${ isCart },
+        fullName_user: "${fullName}") {
+          data {
+          id
+          totalPrice
+          available
+            menu {
+              recipe_id {
+              recipe_name
+              img
+              id
+              status
+            }
+            amount
+            note
+          }
+          order_date
+                user_id {
+            fullName
+          }
+        }
+      }
+    }`
+    })
+}
+
+getAllRecipes() {
+  return this.apollo.watchQuery({
+    query: gql`query GetAllRecipes {
         getAllRecipes {
           data {
             id
@@ -163,13 +247,43 @@ export class ApiServiceService {
           }
         }
       }`
-    })
-  }
+  })
+}
 
-  deleteIngredient(id: any): Observable<any> {
-    console.log(id)
+getAllRecipesPagination(page: number, val: string) {
+  let a: any = ""
+  if (val) {
+    a = val;
+  }
+  return this.apollo.watchQuery({
+    query: gql`query GetAllRecipes {
+        getAllRecipes(page: ${page}, limit: 10, recipe_name: "${a}") {
+          data {
+            id
+            available
+            recipe_name
+            description
+            ingredients {
+              ingredient_id {
+                name
+                id
+              }
+              stock_used
+            }
+            price
+            img
+            status
+          }
+          max_page
+        }
+      }`
+  })
+}
+
+deleteIngredient(id: any): Observable < any > {
+  console.log(id)
     return this.apollo.mutate({
-      mutation: gql`mutation Mutation
+    mutation: gql`mutation Mutation
       {
         deleteIngredient(
           id:"${id}"
@@ -178,13 +292,13 @@ export class ApiServiceService {
           message
         }
       }`
-    })
-  }
+  })
+}
 
 
-  getAllIngredients() {
-    return this.apollo.watchQuery({
-      query: gql`query {
+getAllIngredients() {
+  return this.apollo.watchQuery({
+    query: gql`query {
         getAllIngredient {
           data {
             id
@@ -194,26 +308,88 @@ export class ApiServiceService {
           }
         }
       }`
-    })
+  })
+}
+
+getAllIngredientsPagination(page?: number, name?: string) {
+  let a: any = ""
+  if (name) {
+    a = name;
   }
-
-
-
-  extractIngredients(data: Array<any>) {
-    let ingredients: Array<string> = []
-    for (let a of data) {
-      let x = ''
-      for (let b of a.ingredients) {
-        if (x == '') {
-          x = b.ingredient_id.name;
+  return this.apollo.watchQuery({
+    query: gql`query {
+        getAllIngredient(page: ${page}, limit: 10, name: "${a}"){
+          data {
+            id
+            name 
+            status
+            stock
+          }
+          max_page
         }
-        else {
-          x = x + ', ' + b.ingredient_id.name;
+      }`
+  })
+}
+
+checkout(): Observable < any > {
+  return this.apollo.mutate({
+    mutation: gql`mutation Mutation {
+        checkoutTransaction {
+          id
         }
+      }`
+  })
+}
+
+
+extractIngredients(data: Array<any>) {
+  let ingredients: Array<string> = []
+  for (let a of data) {
+    let x = ''
+    for (let b of a.ingredients) {
+      if (x == '') {
+        x = b.ingredient_id.name;
       }
-      ingredients.push(x)
+      else {
+        x = x + ', ' + b.ingredient_id.name;
+      }
     }
-    return ingredients
+    ingredients.push(x)
   }
+  return ingredients
+}
+
+extractIngredientsTable(data: any) {
+  data = copy(data)
+  let i = 0
+  // let ingredients: Array<string> = []
+  for (let a of data) {
+    let x = ''
+    for (let b of a.ingredients) {
+      if (x == '') {
+        x = b.ingredient_id.name;
+      }
+      else {
+        x = x + ', ' + b.ingredient_id.name;
+      }
+    }
+    // ingredients.push(x)
+    data[i].extractedIngredient = x
+    i++
+  }
+  return data
+}
+
+getAllUsers() {
+  return this.apollo.watchQuery({
+    query: gql`query Query {
+        getAllUsers {
+          data {
+            fullName
+          }
+        }
+      }`
+  })
+}
 
 }

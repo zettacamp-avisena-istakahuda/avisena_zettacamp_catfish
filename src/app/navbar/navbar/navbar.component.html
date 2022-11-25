@@ -1,4 +1,13 @@
 <div class="navbar">
+    <div *ngIf="this.cartAmount > 0" class="cart-logo">
+        <a href="#" [routerLink]="['/cart-page']" onclick="return false;">
+            <mat-icon>shopping_cart</mat-icon>
+        </a>
+        <div>
+            <p>{{this.cartAmount}}</p>
+        </div>
+
+    </div>
     <div class="logo">
         <a [routerLink]="['/homepage']">
             <img src="../../../assets/images/logo.png" alt="">
@@ -6,8 +15,12 @@
     </div>
 
     <div class="navbar-menu">
-        <a [routerLink]="['/menu']"><h1>Menu</h1></a>
-        <a  href="#" onclick="return false;" (click) = "openDialog()"><h1>Login</h1></a> 
+        <a [routerLink]="['/menu']">
+            <h1>Menu</h1>
+        </a>
+        <a href="#" onclick="return false;" (click)="logAction()">
+            <h1>{{this.status}}</h1>
+        </a>
     </div>
-<img src="../../../assets/images/warmindo.png">
+    <img src="../../../assets/images/warmindo.png">
 </div>
